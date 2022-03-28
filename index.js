@@ -1,51 +1,106 @@
 const axios = require('axios');
 const fs = require('fs');
 
-axios.get('https://partyverse.app/events/23158')
-	.then(function(response) {
+const getEvent = async (link) => {
+	let info;
+
+	await axios.get(link)
+		.then(async function(response) {
 		// handle success
-		// console.log(response.data);
-		fs.writeFileSync('./balls.html', response.data);
+			const dataStart = response.data.indexOf('&quot;name&quot;:&quot;');
+			const dataEnd = response.data.indexOf('</script>', dataStart);
+			const result = response.data.slice(dataStart, dataEnd);
 
-		const dataStart = response.data.indexOf('&quot;name&quot;:&quot;');
-		const dataEnd = response.data.indexOf('</script>', dataStart);
-		const result = response.data.slice(dataStart, dataEnd);
+			const getName = () => {
+				const start = result.indexOf('&quot;name&quot;:&quot;');
+				const end = result.indexOf('&quot;,&quot;startDate&quot;:&quot;');
+				let info = result.slice(start, end);
 
-		console.log(dataStart);
-		console.log(dataEnd);
-		console.log(result);
+				info = info.replace('&quot;name&quot;:&quot;', '');
 
-		const getName = () => {
-			const nameStart = result.indexOf('&quot;name&quot;:&quot;');
-			const nameEnd = result.indexOf('&quot;,&quot;startDate&quot;:&quot;');
-			let name = result.slice(nameStart, nameEnd);
+				return info;
+			};
 
-			name = name.replace('&quot;name&quot;:&quot;', '');
+			const getDescription = () => {
+				const start = result.indexOf('&quot;description&quot;:&quot;');
+				const end = result.indexOf('&quot;,&quot;organizer&quot;:');
+				let info = result.slice(start, end);
 
-			return name;
-		};
+				info = info.replace('&quot;description&quot;:&quot;', '');
 
-		const getDescription = () => {
-			const descriptionStart = result.indexOf('&quot;description&quot;:&quot;');
-			const descriptionEnd = result.indexOf('&quot;,&quot;organizer&quot;:');
-			let description = result.slice(descriptionStart, descriptionEnd);
+				return info;
+			};
 
-			description = description.replace('&quot;description&quot;:&quot;', '');
+			const getLocation = () => {
+				const start = result.indexOf('&quot;location&quot;:&quot;');
+				const end = result.indexOf('&quot;,&quot;description&quot;');
+				let info = result.slice(start, end);
 
-			return description;
-		};
+				info = info.replace('&quot;location&quot;:&quot;', '');
 
-		const info = {
-			eventName: getName(),
-			eventDescription: getDescription(),
-		};
+				return info;
+			};
 
-		console.log(info);
-	})
-	.catch(function(error) {
+			const getStart = () => {
+				const start = result.indexOf('&quot;startDate&quot;:&quot;');
+				const end = result.indexOf('&quot;,&quot;endDate&quot;:&quot;');
+				let info = result.slice(start, end);
+
+				info = info.replace('&quot;startDate&quot;:&quot;', '');
+
+				return info;
+			};
+
+			const getEnd = () => {
+				const start = result.indexOf('&quot;,&quot;endDate&quot;:&quot;');
+				const end = result.indexOf('&quot;,&quot;eventAttendanceMode');
+				let info = result.slice(start, end);
+
+				info = info.replace('&quot;,&quot;endDate&quot;:&quot;', '');
+
+				return info;
+			};
+
+			const getImage = () => {
+				const start = response.data.indexOf('</title><link rel="icon" href="');
+				const end = response.data.indexOf('" /><m', start);
+				let info = response.data.slice(start, end);
+
+				info = info.replace('</title><link rel="icon" href="', '');
+
+				return info;
+			};
+
+			info = {
+				eventName: getName(),
+				eventDescription: getDescription(),
+				eventLocation: getLocation(),
+				eventImage: getImage(),
+				date: {
+					eventStart: getStart(),
+					eventEnd: getEnd(),
+				},
+				eventOrganizers: {
+					orgName: 'e',
+					orgUrl: 'e',
+				},
+			};
+		})
+		.catch(function(error) {
 		// handle error
-		console.log(error);
-	})
-	.then(function() {
+			console.log(error);
+		})
+		.then(function() {
 		// always executed
-	});
+		});
+
+	return info;
+};
+
+(async () => {
+
+	const eventInfo = await getEvent('https://partyverse.app/events/23158');
+
+	console.log(eventInfo);
+
+})();
