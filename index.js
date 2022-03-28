@@ -1,7 +1,6 @@
 const axios = require('axios');
-const fs = require('fs');
 
-const getEvent = async (link) => {
+const getEventV1 = async (link) => {
 	let info;
 
 	await axios.get(link)
@@ -10,6 +9,8 @@ const getEvent = async (link) => {
 			const dataStart = response.data.indexOf('&quot;name&quot;:&quot;');
 			const dataEnd = response.data.indexOf('</script>', dataStart);
 			const result = response.data.slice(dataStart, dataEnd);
+
+			// fs.writeFileSync('./ass.html', response.data)
 
 			const getName = () => {
 				const start = result.indexOf('&quot;name&quot;:&quot;');
@@ -97,10 +98,31 @@ const getEvent = async (link) => {
 	return info;
 };
 
-(async () => {
+const getEvent = async (link) => {
+	let info;
 
-	const eventInfo = await getEvent('https://partyverse.app/events/23158');
+	await axios.get(link)
+		.then(async function(response) {
+		// handle success
+			const dataStart = response.data.indexOf('{"props":{"pageProps":{"event":{"id":');
+			const dataEnd = response.data.indexOf('</script>', dataStart);
+			const result = response.data.slice(dataStart, dataEnd);
 
-	console.log(eventInfo);
+			info = JSON.parse(result)
 
-})();
+
+		})
+		.catch(function(error) {
+		// handle error
+			console.log(error);
+		})
+		.then(function() {
+		// always executed
+		});
+
+	return info.props.pageProps.event;
+}
+
+module.exports = {
+	getEvent,
+}
