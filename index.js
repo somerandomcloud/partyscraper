@@ -123,6 +123,56 @@ const getEvent = async (link) => {
 	return info.props.pageProps.event;
 }
 
+const getUser = async (link) => {
+	let info;
+
+	await axios.get(link)
+		.then(async function(response) {
+		// handle success
+			const dataStart = response.data.indexOf('{"props":{"pageProps":{"profile":{"id":');
+			const dataEnd = response.data.indexOf('</script>', dataStart);
+			const result = response.data.slice(dataStart, dataEnd);
+
+			info = JSON.parse(result)
+
+		})
+		.catch(function(error) {
+		// handle error
+			console.log(error);
+		})
+		.then(function() {
+		// always executed
+		});
+
+	return info.props.pageProps.profile;
+}
+
+const getTeam = async (link) => {
+	let info;
+
+	await axios.get(link)
+		.then(async function(response) {
+		// handle success
+			const dataStart = response.data.indexOf('{"props":{"pageProps":{"team":{"id":');
+			const dataEnd = response.data.indexOf('</script>', dataStart);
+			const result = response.data.slice(dataStart, dataEnd);
+
+			info = JSON.parse(result)
+
+		})
+		.catch(function(error) {
+		// handle error
+			console.log(error);
+		})
+		.then(function() {
+		// always executed
+		});
+
+	return info.props.pageProps.team;
+}
+
 module.exports = {
 	getEvent,
+	getUser,
+	getTeam,
 }

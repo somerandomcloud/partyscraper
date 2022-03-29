@@ -1,6 +1,6 @@
 # partyscraper
 
-Scrapes a partyverse event link to get info about that.
+Scrapes Partyverse for info you might want.
 
 Partyverse Website: https://partyverse.app/
 
@@ -13,48 +13,124 @@ const partyscraper = require('./index');
 
 (async () => {
 
-	const eventInfo = await partyscraper.getEvent('https://partyverse.app/events/23158');
+	const eventInfo = await partyscraper.getEvent('https://partyverse.app/events/23218');
+
+	const userInfo = await partyscraper.getUser('https://partyverse.app/users/Berlin')
+
+	const teamInfo = await partyscraper.getTeam('https://partyverse.app/teams/1')
 
 	console.log(eventInfo);
+
+	console.log('\n\n')
+
+	console.log(userInfo);
+
+	console.log('\n\n')
+
+	console.log(teamInfo);
 
 })();
 ```
 
-Example request response:
+___
 
-```js
+<details>
+  <summary>Example of getEvent</summary>
+
+  ```js
 {
-  id: 23158,
-  createdAt: '2022-03-27T20:55:15.879407+00:00',
-  updatedAt: '2022-03-27T20:55:15.879407+00:00',
-  startDate: '2022-03-28T13:00:00+00:00',
-  description: 'A cozy inn in the region of Kugune that offers a relaxing atmosphere with a restaurant and an onsen',
-  title: 'The Inari Inn',
-  tags: [ 'Bar', 'Restaurant' ],
-  attachments: [ 'e9817063-c423-4edd-86f3-299f2befeb86.jpeg' ],
-  location: ' Shirogane - Ward 4 - Plot 4',
-  organizerId: 119,
-  endDate: '2022-03-28T22:00:00+00:00',
-  locationId: 12,
-  ageRating: 0,
-  game: 'final-fantasy-xiv',
-  recurrenceId: 11,
-  nextEventId: 23159,
-  eventTeams: {
-    id: 119,
-    createdAt: '2022-03-27T20:50:53.116176+00:00',
-    updatedAt: '2022-03-27T20:50:53.116176+00:00',
-    ownerId: '62c14478-8b21-4241-88d1-7d3438ff5db0',
-    name: 'Narukai and Co',
-    approved: true,
-    iconUrl: 'cd0d3a6a-a3df-4e32-9a0b-e52feab043fc.jpeg',
-    verified: false,
-    externalId: null,
-    description: null,
-    discordUrl: null,
-    twitterUrl: null,
-    instagramUrl: null
-  },
-  peopleJoining: [ { count: 1 } ]
+	"id":23218,
+	"createdAt":"2022-03-29T15:40:00.972967+00:00",
+	"updatedAt":"2022-03-29T15:40:00.972967+00:00",
+	"startDate":"2022-04-12T18:00:00+00:00",
+	"description":"Any description **bold text here*",
+	"title":"Any title",
+	"tags":[
+		"Night Club",
+		"Bar",
+		"Test"
+	],
+	"attachments":[
+		"7ad4434e-7ea0-4300-b8ac-655e479a6491.png"
+	],
+	"location":"google.com",
+	"organizerId":1,
+	"endDate":"2022-04-13T20:00:00+00:00",
+	"locationId":-1,
+	"ageRating":0,
+	"game":"vrchat",
+	"recurrenceId":13,
+	"nextEventId":null,
+	"eventTeams":{
+		"id":1,
+		"createdAt":"2021-09-12T21:29:33+00:00",
+		"updatedAt":"2021-09-12T21:29:33+00:00",
+		"ownerId":"8849ca9e-551a-4351-bc80-56427dcbd948",
+		"name":"Partyverse",
+		"approved":true,
+		"iconUrl":"icon.png",
+		"verified":true,
+		"externalId":null,
+		"description":"This is the official Partyverse profile on Partyverse. That feels kind of weird to say.",
+		"discordUrl":"https://discord.gg/bWdU3edftH",
+		"twitterUrl":null,
+		"instagramUrl":null
+	},
+	"peopleJoining":[
+		{
+			"count":0
+		}
+	]
 }
 ```
+  
+</details>
+
+___
+<details>
+  <summary>Example of getUser</summary>
+
+  ```js
+{
+	"id":"54d90633-2cbc-4780-ae10-11ce5075ae2d",
+	"created_at":"2021-12-18T14:58:11.233302+00:00",
+	"updated_at":"2021-12-18T14:58:11.233302+00:00",
+	"slug":"Berlin",
+	"displayName":"Berlin",
+	"description":"My Discord is:\nICodeInAssembly#7117",
+	"avatar":null,
+	"lastReadNotification":null,
+	"eventSubscription":[
+		
+	]
+}
+```
+  
+</details>
+
+___
+
+<details>
+  <summary>Example of getTeam</summary>
+
+  ```js
+{
+	"id":1,
+	"createdAt":"2021-09-12T21:29:33+00:00",
+	"updatedAt":"2021-09-12T21:29:33+00:00",
+	"ownerId":"8849ca9e-551a-4351-bc80-56427dcbd948",
+	"name":"Partyverse",
+	"approved":true,
+	"iconUrl":"icon.png",
+	"verified":true,
+	"externalId":null,
+	"description":"This is the official Partyverse profile on Partyverse. That feels kind of weird to say.",
+	"discordUrl":"https://discord.gg/bWdU3edftH",
+	"twitterUrl":null,
+	"instagramUrl":null
+}
+```
+  
+</details>
+
+___
