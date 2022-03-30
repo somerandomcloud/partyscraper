@@ -1,6 +1,6 @@
 # partyscraper
 
-Scrapes Partyverse for info you might want.
+Scrapes Partyverse for info you might want. There is no error handling, good luck.
 
 Partyverse Website: https://partyverse.app/
 

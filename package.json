@@ -1,6 +1,6 @@
 {
   "name": "partyscraper",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Scrapes Partyverse for info you might want.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/somerandomcloud/partyscraper.git"
   },
-  "author": "",
+  "author": "ICodeInAssembly",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/somerandomcloud/partyscraper/issues"
@@ -18,5 +18,9 @@
   "homepage": "https://github.com/somerandomcloud/partyscraper#readme",
   "dependencies": {
     "axios": "^0.26.1"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [
+    "partyverse"
+  ]
 }

@@ -110,17 +110,22 @@ const getEvent = async (link) => {
 
 			info = JSON.parse(result)
 
+			info['status'] = 200
+
+			info = info.props.pageProps.event
 
 		})
 		.catch(function(error) {
-		// handle error
-			console.log(error);
+			if(error.response.status === 404) {
+				info = { status: 404 }
+			}
+			else info = { status: error.response.status } && console.log(error)
 		})
 		.then(function() {
 		// always executed
 		});
 
-	return info.props.pageProps.event;
+	return info;
 }
 
 const getUser = async (link) => {
@@ -135,16 +140,22 @@ const getUser = async (link) => {
 
 			info = JSON.parse(result)
 
+			info['status'] = 200
+
+			info = info.props.pageProps.profile
+
 		})
 		.catch(function(error) {
-		// handle error
-			console.log(error);
+			if(error.response.status === 404) {
+				info = { status: 404 }
+			}
+			else info = { status: error.response.status } && console.log(error)
 		})
 		.then(function() {
 		// always executed
 		});
 
-	return info.props.pageProps.profile;
+	return info;
 }
 
 const getTeam = async (link) => {
@@ -159,16 +170,22 @@ const getTeam = async (link) => {
 
 			info = JSON.parse(result)
 
+			info['status'] = 200
+
+			info = info.props.pageProps.team
+
 		})
 		.catch(function(error) {
-		// handle error
-			console.log(error);
+			if(error.response.status === 404) {
+				info = { status: 404 }
+			}
+			else info = { status: error.response.status } && console.log(error)
 		})
 		.then(function() {
 		// always executed
 		});
 
-	return info.props.pageProps.team;
+	return info;
 }
 
 module.exports = {
