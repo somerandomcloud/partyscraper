@@ -1,6 +1,6 @@
-# partyscraper
+# partyscraper [OBSOLETE]
 
-Scrapes Partyverse for info you might want. There is no error handling, good luck.
+This sucks, use partyverse-wrapper
 
 Partyverse Website: https://partyverse.app/
 
